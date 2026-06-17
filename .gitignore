@@ -23,3 +23,11 @@ backup/
 backup_force/
 .DS_Store
 *.log
+
+# Local Rime runtime files
+build/
+sync/
+*.userdb/
+installation.yaml
+user.yaml
+*.log

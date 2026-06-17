@@ -1,473 +1,469 @@
-# 雾凇拼音
+# Rime / Squirrel 输入法配置
 
-![demo](./others/asserts/overview.png)
+本人的 macOS Squirrel / Rime 配置仓库。
 
-**雾凇拼音**是一份开箱即用的简体中文 Rime 输入法配置，词库长期维护，基本功能齐全，使用完全离线，质量稳定可靠。
+基础方案使用 [雾凇拼音 rime-ice](https://github.com/iDvel/rime-ice)，本仓库只保存我自己的个性化覆盖配置。
 
-雾凇拼音包含全拼和双拼输入方案、长期维护的精校词库、各类扩展功能和详尽的注释。适配小狼毫 Weasel、鼠须管 Squirrel、Fcitx5、iBus 等几乎所有 Rime 应用。你可以不折腾，一键下载部署后即刻使用；可以借着完善的注释和社区生态，让 AI 帮你定制改造；也可以将之作为深入了解和自定义 Rime 的起点。
+[toc]
 
-使用雾凇拼音，享受跨平台一致、隐私友好、个性化门槛低的 Rime 简体中文输入体验。
+## 目录分工
 
-[立即下载安装](#安装) | [功能演示和教程](#功能演示和使用教程) | [常见问题](#常见问题) | [词库共建](https://github.com/iDvel/rime-ice/issues/666) | [更新日志](./others/docs/Changelog.md) | [详细介绍](https://dvel.me/posts/rime-ice/) ↗ | [在线体验](https://www.mintimate.cc/zh/demo/fcitx5Online.html)[^1] ↗
+### GitHub 管理的内容
 
-## 安装
-
-到 Rime [官网](https://rime.im/) 或 app 商店下载安装 Rime 输入法应用。然后：
-
-1. 下载 [雾凇拼音](https://github.com/iDvel/rime-ice/releases/latest/download/full.zip) 压缩包；
-2. 先**清空**[^2]输入法 `用户文件夹`/`用户设定` 内的全部文件，再将压缩包内的所有文件复制进去；
-3. 重新部署。
-
-部署完成后就可以打字了。按 <kbd>F4</kbd> 可以切换输入方案或开关各项功能。重做以上三步可以更新/还原雾凇拼音。
-
-<details>
-<summary>↓ 雾凇拼音也支持命令行自动安装、打补丁和配置语法模型 ↓</summary>
+本仓库管理的是 Rime 的配置文件，主要放在：
 
 ```bash
-* 需要安装 git 及 bash
-* Windows 环境 bash 命令被系统 WSL 占用，进入 git bash 环境再执行以下命令
-
-# 1. 安装 plum
-cd ~
-git clone https://github.com/rime/plum.git plum
-
-# 2. 安装雾凇拼音到默认客户端（Weasel，Squirrel，iBus-rime），更新词库只要执行这一步，3、4 步不需要。
-# 如使用其他客户端请手动指定 rime_dir 变量。
-# e.g. rime_dir="$HOME/.config/fcitx5/rime" bash rime-install iDvel/rime-ice
-cd ~/plum
-bash rime-install iDvel/rime-ice
-
-# 3. 双拼用户额外执行，全拼用户跳过。替换「double_pinyin_flypy」为你使用的方案
-bash rime-install iDvel/rime-ice:others/recipes/config:schema=double_pinyin_flypy
-
-# 4. 如需万象语法模型，额外执行。替换「rime_ice」为你使用的方案
-bash rime-install iDvel/rime-ice:others/recipes/grammar:schema=rime_ice
-
-# 5. 重新部署
-
-# 方案名称
-# rime_ice（雾凇拼音、全拼）
-# double_pinyin（自然码双拼）
-# double_pinyin_flypy（小鹤双拼）
-# double_pinyin_mspy（微软双拼）
-# double_pinyin_sogou（搜狗双拼）
-# double_pinyin_abc（智能 ABC 双拼）
-# double_pinyin_jiajia（拼音加加双拼）
-# double_pinyin_ziguang（紫光双拼）
+~/Library/Rime/
 ```
 
-</details>
+包括但不限于：
 
-要了解更多细节及其他支持的安装方式，请参考 [详细安装指导](./others/docs/Installation.md)。
+```text
+default.custom.yaml
+squirrel.custom.yaml
+rime_ice.custom.yaml
+custom_phrase.txt
+double_pinyin_flypy.custom.yaml
+lua/
+opencc/
+others/
+```
 
-## 介绍
+这些文件控制输入方案、候选词数量、候选框样式、配色、快捷键、模糊音、短语、符号等配置。
 
-雾凇拼音包含：
+### iCloud 管理的内容
 
-1. 为简体中文设计的全拼和常见双拼方案，包括雾凇拼音（全拼）、智能 ABC、自然码、小鹤双拼、搜狗双拼、微软双拼、紫光双拼、拼音加加、9 键[^3] 和轻量的英文方案。
-2. 长期维护、精心调教且开源的百万中英词库：[了解 >](#长期维护的中英词库)
-3. 完善的基础输入体验，以及丰富的扩展功能：[了解 >](#功能演示和使用教程)
-4. 对 Rime 部分及主流客户端每一项配置的详细注释，方便学习和自定义：[示例 >](./default.yaml)
+iCloud 只负责同步 Rime 的**用户词库**和**输入习惯**交换数据，不直接管理主配置目录。
 
-### 长期维护的中英词库
-
-因为没有找到一份比较好的词库，干脆自己维护一个。综合了几个不错的词库，精心调教了很多。
-
-词库简介：
-
-- 字表：
-  - `8105` 常用字表，《通用规范汉字表》+基本的扩充。
-  - `41448` Unihan 大字表，默认未启用。
-- 词库：
-  - `base` 基础词库，含两字词及调频。
-  - `ext` 扩展词库，小词库，含多音字注音。
-  - `tencent` 扩展词库，大词库，无注音（由 Rime 自动注音），含非多音字、只发一种音的多音字、同义多音字。
-- 纯手搓的 Emoji
-- 英文词库：
-  - `en` 20k 左右的常见单词 + 少许补充。
-  - `en_ext` 扩展词库，大部分是缩写或互联网相关。
-
-维护内容主要是异形词、错别字的校对，错误注音的修正，缺失的常用词汇的增添，词频的调整。欢迎在词库方面提 [issue](https://github.com/iDvel/rime-ice/issues/666)，我会及时更新修正。
-
-### 功能演示和使用教程
-
-<h4 align="center"><strong>—— ⌨️ 基础输入 ⌨️ ——</strong></h4>
-
-| **1. 方案选单** | **2. 中文输入** |
-| -------- | -------- |
-| ![](./others/asserts/基础-方案设定_compressed.webp) | ![](./others/asserts/基础-中文输入_compressed.webp) |
-
-| **3. 英文输入** | **4. 中英混合输入** |
-| -------- | -------- |
-| ![](./others/asserts/基础-英文输入_compressed.webp) | ![](./others/asserts/基础-中英混合输入_compressed.webp) |
-
-| **5. Emoji** | **6. 模糊音** |
-| -------- | -------- |
-| ![](./others/asserts/基础-Emoji_compressed.webp) | ![](./others/asserts/基础-模糊音_compressed.webp) |
-
-| **7. 自动纠错** | **8. 繁简转换** |
-| -------- | -------- |
-| ![](./others/asserts/基础-自动纠错_compressed.webp) | ![](./others/asserts/基础-繁简转换_compressed.webp) |
-
-<br>
-
-<h4 align="center"><strong>—— 🔍 反查和符号 🔍 ——</strong></h4>
-
-| **1. 拆字反查** | **2. 数字符号转写** |
-| ---- | ---- |
-| ![](./others/asserts/基础-拆字反查_compressed.webp) | ![](./others/asserts/基础-数字符号便携输入_compressed.webp) |
-| 碰到生僻字，输入 <kbd>uU</kbd> + 字的部件拼音，得到汉字和注音 | 用拼音、英文输入短语中的数字和符号 |
-
-| **3. 符号输入** | **4. 词汇别名** |
-| ---- | ---- |
-| ![](./others/asserts/基础-符号输入_compressed.webp) | ![](./others/asserts/基础-词汇别名_compressed.webp) |
-| 全拼 <kbd>vhelp</kbd>；双拼 <kbd>Vhelp</kbd> 浏览支持列表 | 部分常用词，自动展示其翻译、别名、化学式、简称等 |
-
-<br>
-
-<h4 align="center"><strong>—— ✨ 扩展功能 ✨ ——</strong></h4>
-
-| **1. 以词定字** | **2. 辅码检字** |
-| ---- | ---- |
-| ![](./others/asserts/扩展-以词定字_compressed.webp) | ![](./others/asserts/扩展-辅码检字_compressed.webp) |
-| 用左右中括号键，输入候选的开头或末尾的字 | 输入拼音后，再输入 <kbd>`</kbd> + 字的偏旁部首拼音，筛选候选 |
-
-| **3. 错字错音提示** | **4. 英文自动大小写** |
-| -------- | -------- |
-| ![](./others/asserts/扩展-错字错音提示_compressed.webp) | ![](./others/asserts/扩展-英文自动大小写_compressed.webp) |
-| 输了错字错音，雾凇会提示正确的音形 | 大写开头，得到首字母大写的单词；多个大写字母开头，得到全大写的单词 |
-
-| **5. 日期输入** | **6. 农历输入** |
-| -------- | -------- |
-| ![](./others/asserts/扩展-时间日期_compressed.webp) | ![](./others/asserts/扩展-农历转换_compressed.webp) |
-| 全拼输 <kbd>rq</kbd>，双拼输 <kbd>date</kbd>，得到各种格式的当前日期和时间 | 全拼输 <kbd>nl</kbd>，双拼输 <kbd>lunar</kbd>，获取当前农历；输入 <kbd>N</kbd> + 日期，获取指定日期农历和节气 |
-
-<br>
-
-<h4 align="center"><strong>—— 🧰 便捷工具 🧰 ——</strong></h4>
-
-| **1. 计算器** | **2. Unicode 输入** |
-| ---- | ---- |
-| ![](./others/asserts/扩展-计算器_compressed.webp) | ![](./others/asserts/扩展-Unicode_compressed.webp) |
-| 输入 <kbd>cC</kbd> 后加上算式，得到计算结果 | 输入 <kbd>U</kbd> + Unicode 编码，得到对应字符 |
-
-| **3. UUID 生成** | **4. 数字货币转写** |
-| ---- | ---- |
-| ![](./others/asserts/扩展-uuid_compressed.webp) | ![](./others/asserts/扩展-数字货币大写_compressed.webp) |
-| 输入 <kbd>uuid</kbd>，得到一个随机生成的 UUID | 输入 <kbd>R</kbd> + 数字，自动转写为数字大写或者人民币大写 |
-
-功能快捷键和行为定制，以及更多其他功能，请参考 lua 文件和方案文件中的注释。
-
-## 鸣谢
-
-- [这些项目和脚本](./others/docs/Credits.md) 为雾凇拼音提供的支持和参考。
-- [校对标准论坛](http://www.jiaodui.org/bbs/) 的存在。
-- [@Huandeep](https://github.com/Huandeep) 整理的多个词库。
-- [@Mirtle](https://github.com/mirtlecn) 完善的多个功能。
-- [@Lithium-7](https://github.com/Lithium-7) 对词库的大量修订。
-
-Thanks to JetBrains for the OSS development license.
-
-[![JetBrains](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
-
-Thanks to all contributors.
-
-[![Contributors Avatars](https://contrib.rocks/image?repo=iDvel/rime-ice)](https://github.com/iDvel/rime-ice/graphs/contributors)
-
-## 常见问题
-
-<details>
-<summary>📚 我是否需要语法模型 && 如何安装</summary>
-
-### Rime 语法模型介绍
-
-Rime 语法模型功能基于佛振开发的 [八股文语法插件](https://github.com/lotem/librime-octagram)。主流客户端均预装此插件。需要使用的话，要额外安装模型文件和方案配置补丁。
-
-语法模型期望提升长句输入的准确率，但受训练数据、词典和用户自造词影响，不保证在所有情况下的准确率均能有提升。
-
-### 目前能用的部分语法模型
-
-- https://github.com/lotem/rime-octagram-data （八股文语法模型，适合朙月拼音用户）
-- https://github.com/amzxyz/RIME-LMDG （基于更全的数据，仓库 plum 配方使用这个项目）
-
-### 给雾凇拼音安装语法模型
-
-使用 plum 安装，并打补丁
+当前 iCloud 同步目录是：
 
 ```bash
-# 请先参考安装部分，完成 plum 安装
-bash rime-install iDvel/rime-ice:others/recipes/grammar:schema=方案名称
-
-# 重新部署后生效
-
-# 方案名称
-# rime_ice（雾凇拼音、全拼）
-# double_pinyin（自然码双拼）
-# double_pinyin_flypy（小鹤双拼）
-# double_pinyin_mspy（微软双拼）
-# double_pinyin_sogou（搜狗双拼）
-# double_pinyin_abc（智能 ABC 双拼）
-# double_pinyin_jiajia（拼音加加双拼）
-# double_pinyin_ziguang（紫光双拼）
+~/Library/Mobile Documents/com~apple~CloudDocs/RimeSync
 ```
 
-手动安装：
+在 `~/Library/Rime/installation.yaml` 中通过 `sync_dir` 指定：
 
-1. 下载语法模型文件到 Rime 用户文件夹内；
-2. 按语法模型的说明，给方案文件打补丁；
-3. 重新部署后生效。
+```yaml
+sync_dir: "/Users/par/Library/Mobile Documents/com~apple~CloudDocs/RimeSync"
+```
 
-</details>
+iCloud 里的 `RimeSync` 通常会包含多个设备 ID 目录，例如：
 
-<details>
-<summary>🛠️ 怎么修改雾凇拼音的配置</summary>
+```text
+RimeSync/
+├── 15f4928a-6977-4686-bbd9-c618cd725ca0
+└── EF175FAF-2A55-4534-9D8C-F04887199BAD
+```
 
-可以根据注释，直接在文件上修改，这样修改也简单，适合初次尝试。但注意，这会在更新后被覆盖掉。
+这些目录分别代表不同电脑 / 不同 Rime 安装实例的同步身份。
 
-熟悉后，推荐使用 [打补丁的方式](https://dvel.me/posts/rime-ice/#%E4%BB%A5-patch-%E7%9A%84%E6%96%B9%E5%BC%8F%E6%89%93%E8%A1%A5%E4%B8%81) 来覆盖原配置的选项，不修改仓库中已有的文件，这样可放心全量拉取更新，通过 plum 或 git pull 时不用担心由于更新文件导致自定义的配置被覆盖。
+### 同步机制说明
 
-</details>
+Rime 的同步不是 iCloud 自动合并配置，而是：
 
-<details>
-<summary>⌨️ 双拼怎么添加自定义短语，怎么让拆字/英文的编码支持双拼</summary>
+```text
+iCloud 负责搬运同步目录里的文件
+Rime 负责读取 sync_dir，并在本机 userdb 和 RimeSync 之间合并用户词库
+```
 
-相对于全拼，双拼的一些配置有所不同：
+需要区分三个东西：
 
-- 双拼的自定义短语文件默认为 `custom_phrase_double.txt`，需要手动创建。
-- 英文方案 `melt_eng.schema.yaml` 中有一些不通用的派生规则，默认启用的是全拼的。
-- 部件拆字方案 `radical_pinyin.schema.yaml` 的反查和辅码，有一些不通用的派生规则，默认启用的是全拼的。
-- 双拼是显示全拼编码还是双拼编码？比如小鹤双拼输入 `zz` 时，是显示 `zz` 还是 `zou`，默认是转换为全拼编码。`translator` 下的 `preedit_format` 属性会影响输入框和 Shift+回车时的显示，删除这部分就不转换。
+```text
+*.userdb/
+= 当前电脑正在使用的本地用户词库数据库
+= Rime 打字时真正读取和更新的地方
 
-双拼可以直接用 plum 自动打补丁，也可以手写，下面以小鹤双拼方案 `double_pinyin_flypy.schema.yaml` 为例。
+RimeSync/
+= 多台电脑之间交换用户词库数据的中转站
+= 不直接参与日常输入，只在执行 Rime 同步时被读取/写入
 
-（补丁放到仓库里了 [others/patch_examples](https://github.com/iDvel/rime-ice/tree/main/others/patch_examples)）
+iCloud
+= 只负责把 RimeSync 文件夹同步到其他电脑
+= 不理解 Rime 数据，也不会自动合并用户词库
+```
 
-1. 创建 `melt_eng.custom.yaml` 修改英文派生规则：
+也就是说，平时打字时：
+
+```text
+用户输入
+    ↓
+Rime 学习新词、词频、输入习惯
+    ↓
+写入本机 ~/Library/Rime/*.userdb/
+```
+
+执行同步时：
+
+```text
+本机 *.userdb/
+    ↓
+Rime 导出本机用户词库数据
+    ↓
+写入 iCloud/RimeSync/本机 installation_id/
+```
+
+同时，Rime 也会读取其他设备的同步数据：
+
+```text
+iCloud/RimeSync/其他设备 installation_id/
+    ↓
+Rime 读取其他设备的用户词库数据
+    ↓
+合并进本机 ~/Library/Rime/*.userdb/
+```
+
+所以完整流程可以理解为：
+
+```text
+A 电脑输入习惯
+    ↓
+A 的本地 *.userdb/ 被更新
+    ↓
+A 执行 Rime 同步
+    ↓
+A 的用户词库数据写入 iCloud/RimeSync/A设备ID/
+    ↓
+iCloud 把 RimeSync 同步到 B 电脑
+    ↓
+B 执行 Rime 同步
+    ↓
+B 读取 RimeSync/A设备ID/ 的数据
+    ↓
+B 的本地 *.userdb/ 合并 A 的输入习惯
+    ↓
+B 同时把自己的 *.userdb/ 导出到 RimeSync/B设备ID/
+```
+
+反过来也一样：
+
+```text
+B 电脑输入习惯
+    ↓
+B 执行 Rime 同步
+    ↓
+写入 iCloud/RimeSync/B设备ID/
+    ↓
+A 执行 Rime 同步
+    ↓
+A 的本地 *.userdb/ 合并 B 的输入习惯
+```
+
+因此，`RimeSync` 不是最终生效的词库。
+ 最终真正生效的是本机的：
+
+```text
+~/Library/Rime/*.userdb/
+```
+
+`RimeSync` 的作用是作为跨设备交换站。
+ 每次执行：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
+
+Rime 都会同时做两件事：
+
+```text
+1. 把 RimeSync 里其他设备的数据合并进本机 *.userdb/
+2. 把本机 *.userdb/ 的数据更新到 RimeSync 里的本机设备目录
+```
+
+所以新设备要继承旧设备的输入习惯，需要满足三个条件：
+
+```text
+1. 新设备的 installation.yaml 设置了正确的 sync_dir
+2. iCloud 已经把旧设备的 RimeSync 数据同步过来
+3. 新设备执行过 rime_deployer --sync
+```
+
+同步命令：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
+
+同步后建议重新部署一次：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+一句话总结：
+
+```text
+*.userdb 是本机真正使用的用户词库；
+RimeSync 是跨设备交换用户词库的中转站；
+iCloud 只负责同步 RimeSync 文件夹；
+Rime Sync 才负责真正合并用户词库。
+```
+
+## 当前个性化修改
+
+### 输入方案
+
+当前基于雾凇拼音 `rime-ice`，并启用小鹤双拼相关方案：
+
+```text
+double_pinyin_flypy.schema.yaml
+rime_ice.schema.yaml
+```
+
+主要目标：
+
+```text
+中文输入：雾凇拼音
+双拼方案：小鹤双拼
+英文混输：保留 melt_eng 相关支持
+```
+
+### 候选词数量
+
+候选词数量通过 `default.custom.yaml` 或相关 patch 配置控制。
+ 用于调整每页显示的候选词数量，避免候选框过长或候选不足。
+
+常见配置位置，如候选词数量：
 
 ```yaml
 patch:
-  # 修改为小鹤双拼的拼写派生规则，因为不在同一个文件了，前面要加上文件名
-  speller/algebra:
-    __include: melt_eng.schema.yaml:/algebra_double_pinyin_flypy
+  menu/page_size: 5
 ```
 
-2. 创建 `radical_pinyin.custom.yaml` 修改反查及辅码派生规则：
+### Squirrel 外观和配色
+
+候选框样式、字体、颜色、横排/竖排等控制由：
+
+```text
+squirrel.custom.yaml
+```
+
+这里用于管理：
+
+```text
+候选框颜色
+高亮候选词颜色
+字体大小
+候选框圆角
+边框
+阴影
+候选词排列方式
+```
+
+常见配置类似：
 
 ```yaml
 patch:
-  # 修改为小鹤双拼的拼写派生规则，因为不在同一个文件了，前面要加上文件名
-  speller/algebra:
-    __include: radical_pinyin.schema.yaml:/algebra_double_pinyin_flypy
+  style/color_scheme: custom
+  style/horizontal: true
+  style/font_point: 16
+  style/candidate_format: "%c %@ "
 ```
 
-3. （按需选择）创建 `double_pinyin_flypy.custom.yaml`：
-
-```yaml
-patch:
-  # （按需选择）清空 preedit_format 中的内容，输入时显示双拼编码
-  translator/preedit_format: []
-```
-
-</details>
-
-<details>
-<summary>🔀 能实现全拼双拼混输吗</summary>
-
-参考：<https://dvel.me/posts/rime-full-pinyin-double-pinyin-mixed-input/>
-
-</details>
-
-<details>
-<summary>🚫 xx 字打不出来 / xx 读音没有</summary>
-
-可能为生僻字，请尝试开启大字表。若确实为常用字（如常见于人名、物品名、术语），请 PR 或在 <https://github.com/iDvel/rime-ice/issues/666> 补充。
-
-</details>
-
-<details>
-<summary>🔲 部分候选项变成豆腐块、方块、问号</summary>
-
-系统缺少相关字体导致。请尝试下载或更换显示字体。
-
-关于部分生僻字，参考 <https://github.com/iDvel/rime-ice/issues/841> 的推荐。
-
-- [MiSans + MiSans L3](https://hyperos.mi.com/font/zh/rare-word/)
-- [遍黑体](https://github.com/Fitzgerald-Porthmouth-Koenigsegg/Plangothic-Project)
-- 花园明朝
-
-Windows 10 平台部分 Emoji 用系统默认字体无法显示，请尝试下载 [Noto Color Emoji](https://fonts.google.com/noto/specimen/Noto+Color+Emoji) 或用 Windows 11 Emoji 字体替换。
-
-</details>
-
-<details>
-<summary>⚠️ 部署失败或者报错</summary>
-
-如果缩进错误，或用了 Tab，可能部署时并不会报错，而是自动加载默认配置。
-
-如果发现方案选单里是朙月拼音，打的是繁体，那可能是配置有问题，Rime 自动加载了默认配置，检查一下修改过的地方。
-
-配置错误也可能导致 `default.yaml` 文件被移入 `trash/` 目录，你需要移动回来，改好后重新部署，然后可以直接删除 `trash/` 目录。
-
-</details>
-
-<details>
-<summary>🔄 中英文、大小写切换行为如何修改</summary>
-
-Shift 是否切换中英，切换时的行为等等，参考 `default.yaml` 中 `ascii_composer` 下的详细注释。
-
-</details>
-
-<details>
-<summary>📝 怎么修改标点符号映射</summary>
-
-标点符号相关配置在 `default.yaml` 中定义，再在多个方案中引用。
-
-修改 `default.yaml` 或在 `default.custom.yaml` 中打补丁即可全局修改。
-
-</details>
-
-<details>
-<summary>🎨 怎么设置皮肤横向竖向排列</summary>
-
-皮肤配置不通用，要参考各前端自己的配置方式。
-
-小狼毫由 `style/horizontal` 属性决定：
-
-```yaml
-patch:
-  "style/horizontal": true  # true 横向 | false 竖向
-```
-
-鼠须管的 `horizontal` 属性已经弃用，在 `squirrel.yaml` 皮肤的选项中使用以下两个属性：
+具体配色方案放在：
 
 ```yaml
 preset_color_schemes:
-  皮肤名:
-    candidate_list_layout: stacked  # stacked | linear  候选项排列方向
-    text_orientation: horizontal    # horizontal | vertical  文字排列方向
+  custom:
+    name: Custom
+    author: Songqing
+    back_color: 0xFFFFFF
+    text_color: 0x000000
+    hilited_candidate_back_color: 0xD75A00
+    hilited_candidate_text_color: 0xFFFFFF
 ```
 
-⚠️ 注意具体皮肤的优先级比 `style` 的高。
+注意：Squirrel 的颜色格式通常是 `0xBBGGRR`，不是普通网页里的 `#RRGGBB`。
 
-鼠须管效果展示：
+### 用户词库和输入习惯
 
-<img width="668" alt="图片" src="https://user-images.githubusercontent.com/14658234/230854033-af8e97ee-1dca-43dd-88d7-eb1ade95b767.png">
+本地真正使用的用户词库在：
 
-</details>
+```text
+~/Library/Rime/*.userdb/
+```
 
-<details>
-<summary>📌 怎么自定义短语</summary>
+例如：
 
-自定义短语用 Tab 分割词汇、编码、权重。
+```text
+rime_ice.userdb/
+luna_pinyin.userdb/
+```
 
-`custom_phrase.txt` 中是我自己的习惯，仅供参考，这个每个人的习惯都不一样，可以换成自己的。
+这些目录是当前电脑正在使用的输入习惯数据库。
+ 不要手动用 Git 管理这些 `.userdb` 目录，也不要直接把整个 `~/Library/Rime` 放到 iCloud 里同步。
 
-可以新建一个文件，并在方案的 `custom_phrase/user_dict:` 下指定使用哪个文件。
+正确做法是：
 
-</details>
+```text
+GitHub 同步配置
+iCloud + Rime Sync 同步用户词库和输入习惯
+```
 
-<details>
-<summary>💱 怎么设置台湾繁体</summary>
+### 不再使用的本地 sync 目录
 
-默认 OpenCC 的选项 `traditionalize/opencc_config: s2t.json` 是香港繁体。
-
-台湾繁体有以下两种方式供参考，先修改为 `s2tw.json`：
-
-- 参考 <https://github.com/iDvel/rime-ice/issues/291>，修改 opencc
-- 参考 <https://github.com/iDvel/rime-ice/issues/575>，补加一个 t2tw
-    （因为不知道什么原因，`s2tw.json` 选项并没有真正转换为台湾繁体，所以又补了一个 `t2tw.json`）
-    （librime 1.10 已修复，新版本不再需要折腾了。）
-
-</details>
-
-<details>
-<summary>😀 可以支持颜文字吗？</summary>
-
-没有加入颜文字，可参考 <https://github.com/iDvel/rime-ice/pull/920>。
-
-</details>
-
-<details>
-<summary>🐧 Linux 系统无候选 & 雾凇拼音候选后出现拼音注释等</summary>
-
-输入 `rq`（双拼是 `date`），如若没有出现当前日期，则表示 Lua 没有成功加载，您就可能遇到上述问题。
-
-请确保你已经正确安装了 librime 包，并以插件或其他形式安装了其依赖包 librime-lua（部分发行版——特别是红帽系——需要手动安装）；如果仍存在问题，或者你无法判断是否达成此条件，请：
-
-- 若使用 fcitx 框架，请改用其继承者 fcitx5；若使用 fcitx5 框架，请保证安装的是 **fcitx5-rime** 而非 ~~fcitx-rime~~
-- 若使用 ibus 框架，出现意外，可以考虑使用 [AppImage](https://github.com/hchunhui/ibus-rime.AppImage)，以跟进 librime 更新
-- 若使用 fcitx5 框架，出现意外，请考虑使用 [Flatpak](https://flathub.org/apps/org.fcitx.Fcitx5)，参考 Fcitx5 官方 [wiki](https://fcitx-im.org/wiki/Install_Fcitx_5#Install_Fcitx_5_from_Flatpak)
-
-AppImage 和 Flatpak 可以确保没有依赖问题。
-
-请参考：<https://github.com/iDvel/rime-ice/issues/840>
-
-</details>
-
-<details>
-<summary>🐧 Linux Fcitx5 首次安装雾凇拼音后，无法输入</summary>
-
-请尝试修改任意 yaml 文件，再重新部署 Rime，不要仅依赖重启输入法框架。
-
-请参考 <https://github.com/iDvel/rime-ice/issues/1439>
-
-</details>
-
-<details>
-<summary>🌙 怎么添加或修改 Lua？</summary>
-
-做好自己的 Lua 放在 `lua/` 文件夹内，使用[新版 librime-lua 引入模块的方式](https://github.com/hchunhui/librime-lua/wiki/Scripting#%E6%96%B0%E7%89%88-librime-lua)，不用修改 `rime.lua`：
+如果 `installation.yaml` 里已经设置了：
 
 ```yaml
-- lua_translator@*my_translator  # 多了一个星号
+sync_dir: "/Users/par/Library/Mobile Documents/com~apple~CloudDocs/RimeSync"
 ```
 
-比如想将自己修改后的 `new_date_translator.lua` 替换掉 `date_translator`：
+那么：
+
+```text
+~/Library/Rime/sync/
+```
+
+这个本地 sync 目录就不是当前主要同步目录，可以删除。
+
+## 新电脑初始化流程
+
+### 1. 安装 Squirrel
+
+```bash
+brew install --cask squirrel-app
+```
+
+### 2. 安装雾凇拼音 rime-ice
+
+```bash
+rm -rf /tmp/rime-ice
+git clone --depth=1 https://github.com/iDvel/rime-ice.git /tmp/rime-ice
+rsync -av --exclude='.git' /tmp/rime-ice/ ~/Library/Rime/
+```
+
+### 3. 覆盖我的自定义配置
+
+```bash
+rm -rf /tmp/rime-config
+git clone git@github.com:LibertyChaser/rime-config.git /tmp/rime-config
+rsync -av /tmp/rime-config/ ~/Library/Rime/
+```
+
+### 4. 设置 iCloud RimeSync 目录
+
+先确认 iCloud 目录存在：
+
+```bash
+mkdir -p ~/Library/Mobile\ Documents/com~apple~CloudDocs/RimeSync
+```
+
+然后检查：
+
+```bash
+cat ~/Library/Rime/installation.yaml
+```
+
+确保里面有类似：
 
 ```yaml
-# 方式一、复制完整的 translators 的内容过来
-patch:
-  engine/translators:
-    # 。。。
-    - lua_translator@*new_date_translator  # 将此处替换为自己的 Lua
-    # 。。。
-
-# 方式二、仅替换修改项，但依赖于原始排序（从 0 开始数），如果排序变动就替换错了
-patch:
-  engine/translators/@2: lua_translator@*new_date_translator
+sync_dir: "/Users/par/Library/Mobile Documents/com~apple~CloudDocs/RimeSync"
 ```
 
-</details>
+### 5. 同步用户词库
 
-<details>
-<summary>📋 我看到了日志里面的 WARNING</summary>
+等 iCloud 把 `RimeSync` 文件夹同步完成后，执行：
 
-WARNING 日志仅为警告，一般可以忽视。ERROR 文件若有日志，则需要留神。
-
-```
-accessing blocking node with unresolved dependencies:
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
 ```
 
-这是因为 melt_eng 和 radical_pinyin 引用了自身的节点，RIME build 时认为这可能会导致引用了一个未编译完成的文件，因而抛出警告。无视即可。
+这一步会把其他电脑的用户词库和输入习惯合并到当前电脑。
 
+### 6. 重新部署
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
 ```
-duplicate definition:
+
+## 日常使用
+
+### 修改配置后
+
+```bash
+cd ~/Library/Rime
+git add .
+git commit -m "Update rime config"
+git push
+
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
 ```
 
-因为某些词典有重复的条目，build 时 RIME 认为这可能会造成编码和权重的覆写，因而抛出警告，无视即可。
+### 同步输入习惯
 
-</details>
+在每台电脑上分别执行：
 
-## 许可证
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
 
-GPL-3.0 (only) License.
+如果刚从另一台电脑同步过来，建议再部署一次：
 
-## 赞助
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
 
-如果觉得项目不错，可以请 Dvel 吃个煎饼馃子。
+## 常用命令
 
-<img src="./others/asserts/sponsor.webp" alt="请 Dvel 吃个煎饼馃子" width=300 />
+打开 Rime 配置目录：
 
-[^1]: 由 @Mintimate 友情构建
-[^2]: 这将清空你之前的用户偏好和词库，如需要，请先备份
-[^3]: 九键方案仅适用于 iOS 平台的特定软件
+```bash
+open ~/Library/Rime
+```
+
+打开 iCloud RimeSync：
+
+```bash
+open ~/Library/Mobile\ Documents/com~apple~CloudDocs/RimeSync
+```
+
+查看当前安装信息：
+
+```bash
+cat ~/Library/Rime/installation.yaml
+```
+
+同步用户词库：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
+
+重新部署：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+清理 build 后重新部署：
+
+```bash
+rm -rf ~/Library/Rime/build
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+重启 Squirrel：
+
+```bash
+killall Squirrel || true
+open -a Squirrel
+```
+
+## 最重要的原则
+
+```text
+~/Library/Rime/
+= 当前电脑真正使用的 Rime 配置目录
+
+GitHub
+= 管理 YAML / Lua / 自定义短语等配置文件
+
+iCloud Drive/RimeSync
+= Rime 用户词库和输入习惯的同步交换站
+
+*.userdb
+= 当前电脑正在使用的本地用户词库，不直接用 Git 管
+```
+
+不要把整个 `~/Library/Rime` 直接交给 iCloud 同步。
+
+稳定做法是：**GitHub 管配置，iCloud + Rime Sync 管输入习惯。**

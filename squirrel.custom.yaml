@@ -1,8 +1,31 @@
 patch:
+  # 字体大小
+  style/font_point: 18
+  style/label_font_point: 16
+  style/comment_font_point: 16
+
   # 候选框横向排列
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
   style/inline_preedit: true
+
+  # 减少候选项内部空白
+  style/candidate_format: "%c.%@"
+
+  # 候选框间距，可以让横向候选不那么挤
+  style/candidate_spacing: 3
+
+  # 候选编号和候选词之间的距离
+  style/spacing: 3
+
+  # 候选框圆角
+  style/corner_radius: 12
+  style/hilited_corner_radius: 12
+
+  # 候选框边框和阴影
+  style/border_height: 0
+  style/border_width: 0
+  style/shadow_size: 3
 
   # 浅色/深色主题
   style/color_scheme: mac_light
