@@ -1,0 +1,37 @@
+patch:
+  style/candidate_list_layout: linear
+  style/text_orientation: horizontal
+  style/inline_preedit: true
+
+  style/color_scheme: mac_light
+  style/color_scheme_dark: mac_dark
+
+  preset_color_schemes/mac_light:
+    name: "Mac Light"
+    back_color: 0xFFFFFF
+    border_color: 0xDDDDDD
+    text_color: 0x333333
+    candidate_text_color: 0x333333
+    comment_text_color: 0x888888
+    label_color: 0x888888
+
+    # Selected candidate
+    hilited_candidate_back_color: 0xFF7A00
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+
+  preset_color_schemes/mac_dark:
+    name: "Mac Dark"
+    back_color: 0x2B2B2B
+    border_color: 0x444444
+    text_color: 0xEEEEEE
+    candidate_text_color: 0xEEEEEE
+    comment_text_color: 0xAAAAAA
+    label_color: 0xAAAAAA
+
+    # Selected candidate
+    hilited_candidate_back_color: 0xFF7A00
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_comment_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF

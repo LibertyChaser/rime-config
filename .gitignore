@@ -1,0 +1,10 @@
+build/
+sync/
+*.userdb/
+backup/
+backup_force/
+installation.yaml
+user.yaml
+user.yaml.bak*
+*.log
+.DS_Store
