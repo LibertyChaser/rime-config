@@ -1,10 +1,25 @@
+*
+
+!.gitignore
+!README.md
+
+!default.custom.yaml
+!squirrel.custom.yaml
+!rime_ice.custom.yaml
+
+# 你现在把自定义 emoji 写在 rime_ice.dict.yaml 里，所以先保留它
+!rime_ice.dict.yaml
+
+# 如果之后改成独立 custom dict，再不要同步 rime_ice.dict.yaml
+
+# 永远不要同步这些
 build/
 sync/
 *.userdb/
-backup/
-backup_force/
 installation.yaml
 user.yaml
 user.yaml.bak*
-*.log
+backup/
+backup_force/
 .DS_Store
+*.log
