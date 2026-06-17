@@ -1,10 +1,16 @@
 patch:
+  # 候选框横向排列
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
   style/inline_preedit: true
 
+  # 浅色/深色主题
   style/color_scheme: mac_light
   style/color_scheme_dark: mac_dark
+
+  # Safari / Maps 不默认进入英文模式
+  app_options/com.apple.Safari/ascii_mode: false
+  app_options/com.apple.Maps/ascii_mode: false
 
   preset_color_schemes/mac_light:
     name: "Mac Light"
@@ -15,7 +21,7 @@ patch:
     comment_text_color: 0x888888
     label_color: 0x888888
 
-    # Selected candidate
+    # 被选中的候选词，macOS 蓝色
     hilited_candidate_back_color: 0xFF7A00
     hilited_candidate_text_color: 0xFFFFFF
     hilited_comment_text_color: 0xFFFFFF
@@ -30,12 +36,8 @@ patch:
     comment_text_color: 0xAAAAAA
     label_color: 0xAAAAAA
 
-    # Selected candidate
+    # 被选中的候选词，macOS 蓝色
     hilited_candidate_back_color: 0xFF7A00
     hilited_candidate_text_color: 0xFFFFFF
     hilited_comment_text_color: 0xFFFFFF
     hilited_candidate_label_color: 0xFFFFFF
-
-patch:
-  app_options/com.apple.Safari/ascii_mode: false
-  app_options/com.apple.Maps/ascii_mode: false
