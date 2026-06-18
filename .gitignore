@@ -31,3 +31,4 @@ sync/
 installation.yaml
 user.yaml
 *.log
+!custom_phrase.txt

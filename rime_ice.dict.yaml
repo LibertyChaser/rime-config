@@ -76,7 +76,28 @@ M4
 4D
 3D打印
 
-# Custom emoji phrases
+# Custom phrases
+#
+# Format:
+# 候选词<Tab>标准拼音编码<Tab>权重
+#
+# 权重说明：
+# - 数字越大，候选越靠前
+# - 这里放的是“正确词库项”，所以可以给较高权重
+# - 建议使用标准拼音编码，不要把手误编码放进主词库
+#
+# 例如：
+# 点儿	dian er	1000000
+#
+# 含义：
+# 「点儿」是正确词条
+# 标准拼音是 dian er
+# 权重较高，所以输入 dian er / dianer 时更容易靠前出现
+#
+# 错误输入 dain / dainer 这类问题，不应该主要靠主词库解决
+# 应该交给 rime_ice.custom.yaml 里的 speller/algebra
+# 或者必要时用 custom_phrase.txt 做个人兜底
+
 💦	liu han	1000000
 😓	liu han	999999
 😅	liu han	999998
