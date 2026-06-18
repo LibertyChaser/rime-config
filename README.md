@@ -6,6 +6,72 @@
 
 [toc]
 
+## 最重要的原则
+
+```text
+~/Library/Rime/
+= 当前电脑真正使用的 Rime 配置目录
+
+GitHub
+= 管理 YAML / Lua / 自定义短语等配置文件
+
+iCloud Drive/RimeSync
+= Rime 用户词库和输入习惯的同步交换站
+
+*.userdb
+= 当前电脑正在使用的本地用户词库，不直接用 Git 管
+```
+
+不要把整个 `~/Library/Rime` 直接交给 iCloud 同步。
+
+稳定做法是：**GitHub 管配置，iCloud + Rime Sync 管输入习惯。**
+
+## 常用命令
+
+打开 Rime 配置目录：
+
+```bash
+open ~/Library/Rime
+```
+
+打开 iCloud RimeSync：
+
+```bash
+open ~/Library/Mobile\ Documents/com~apple~CloudDocs/RimeSync
+```
+
+查看当前安装信息：
+
+```bash
+cat ~/Library/Rime/installation.yaml
+```
+
+同步用户词库：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
+
+重新部署：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+清理 build 后重新部署：
+
+```bash
+rm -rf ~/Library/Rime/build
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+重启 Squirrel：
+
+```bash
+killall Squirrel || true
+open -a Squirrel
+```
+
 ## 目录分工
 
 ### GitHub 管理的内容
@@ -303,7 +369,7 @@ iCloud + Rime Sync 同步用户词库和输入习惯
 
 | 位置 | 适合放什么 | 编码方式 | 例子 |
 | --- | --- | --- | --- |
-| `rime_ice.dict.yaml` | 正确、高频、主动想加入词库的内容；适合 emoji、专有名词、高频短语、希望稳定出现在候选里的词 | 标准拼音编码 | `点儿	dian er	1` |
+| `rime_ice.dict.yaml` | 正确、高频、主动想加入词库的内容；适合 emoji、专有名词、高频短语、希望稳定出现在候选里的词 | 标准拼音编码 | `点儿  dian er 1` |
 | `rime_ice.custom.yaml` 的 `speller/algebra` | 拼写容错规则；负责把规律性错误输入映射到正确拼音 | 正则派生规则 | `xai -> xia` |
 | `custom_phrase.txt` | 临时、个人、非标准输入码补丁；适合特别私人的、强制置顶的、或无法靠标准拼音和 `speller/algebra` 稳定解决的内容 | 自定义输入码 | `点儿    dainer  1` |
 
@@ -328,6 +394,47 @@ sync_dir: "/Users/par/Library/Mobile Documents/com~apple~CloudDocs/RimeSync"
 ```
 
 这个本地 sync 目录就不是当前主要同步目录，可以删除。
+
+## 日常使用
+
+### 快速移动正在输入的拼音光标
+
+在候选框还显示时，拼音还没有真正输入到文本框里。  
+
+这个阶段左右方向键默认是逐字符移动。
+
+如果正在输入较长拼音串，例如：
+
+```text
+hai wang cang
+```
+
+可以使用：Option + Left / Option + Right 按词或拼音片段快速移动光标。
+
+### 修改配置后
+
+```bash
+cd ~/Library/Rime
+git add .
+git commit -m "Update rime config"
+git push
+
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
+
+### 同步输入习惯
+
+在每台电脑上分别执行：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
+```
+
+如果刚从另一台电脑同步过来，建议再部署一次：
+
+```bash
+"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
+```
 
 ## 新电脑初始化流程
 
@@ -388,96 +495,3 @@ sync_dir: "/Users/par/Library/Mobile Documents/com~apple~CloudDocs/RimeSync"
 ```bash
 "/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
 ```
-
-## 日常使用
-
-### 修改配置后
-
-```bash
-cd ~/Library/Rime
-git add .
-git commit -m "Update rime config"
-git push
-
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
-```
-
-### 同步输入习惯
-
-在每台电脑上分别执行：
-
-```bash
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
-```
-
-如果刚从另一台电脑同步过来，建议再部署一次：
-
-```bash
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
-```
-
-## 常用命令
-
-打开 Rime 配置目录：
-
-```bash
-open ~/Library/Rime
-```
-
-打开 iCloud RimeSync：
-
-```bash
-open ~/Library/Mobile\ Documents/com~apple~CloudDocs/RimeSync
-```
-
-查看当前安装信息：
-
-```bash
-cat ~/Library/Rime/installation.yaml
-```
-
-同步用户词库：
-
-```bash
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --sync ~/Library/Rime
-```
-
-重新部署：
-
-```bash
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
-```
-
-清理 build 后重新部署：
-
-```bash
-rm -rf ~/Library/Rime/build
-"/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
-```
-
-重启 Squirrel：
-
-```bash
-killall Squirrel || true
-open -a Squirrel
-```
-
-## 最重要的原则
-
-```text
-~/Library/Rime/
-= 当前电脑真正使用的 Rime 配置目录
-
-GitHub
-= 管理 YAML / Lua / 自定义短语等配置文件
-
-iCloud Drive/RimeSync
-= Rime 用户词库和输入习惯的同步交换站
-
-*.userdb
-= 当前电脑正在使用的本地用户词库，不直接用 Git 管
-```
-
-不要把整个 `~/Library/Rime` 直接交给 iCloud 同步。
-
-稳定做法是：**GitHub 管配置，iCloud + Rime Sync 管输入习惯。**
