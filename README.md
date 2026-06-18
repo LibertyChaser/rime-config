@@ -299,6 +299,20 @@ GitHub 同步配置
 iCloud + Rime Sync 同步用户词库和输入习惯
 ```
 
+### 词库、拼写容错与自定义短语的分工
+
+| 位置 | 适合放什么 | 编码方式 | 例子 |
+| --- | --- | --- | --- |
+| `rime_ice.dict.yaml` | 正确、高频、主动想加入词库的内容；适合 emoji、专有名词、高频短语、希望稳定出现在候选里的词 | 标准拼音编码 | `点儿	dian er	1` |
+| `rime_ice.custom.yaml` 的 `speller/algebra` | 拼写容错规则；负责把规律性错误输入映射到正确拼音 | 正则派生规则 | `xai -> xia` |
+| `custom_phrase.txt` | 临时、个人、非标准输入码补丁；适合特别私人的、强制置顶的、或无法靠标准拼音和 `speller/algebra` 稳定解决的内容 | 自定义输入码 | `点儿    dainer  1` |
+
+简单原则：
+
+- 正确内容进词库 `rime_ice.dict.yaml`；
+- 规律性手误进 `rime_ice.custom.yaml` 的 `speller/algebra`；
+- 特殊非标准短语进 `custom_phrase.txt`。
+
 ### 不再使用的本地 sync 目录
 
 如果 `installation.yaml` 里已经设置了：
