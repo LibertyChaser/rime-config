@@ -3,26 +3,63 @@ patch:
   translator/enable_sentence: true
   translator/enable_user_dict: true
   translator/contextual_suggestions: true
-  speller/algebra/+:
-    # - derive/^正确拼音$/错误输入/
-    
-    # nag -> ang
-    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)ang$/$1nag/
+speller/algebra/+:
+  # - derive/^正确拼音$/错误输入/
 
-    # ain -> ian
-    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)ian$/$1ain/
-    
-    # egn -> eng
-    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)eng$/$1egn/
+# === 韵母内部键序错位容错：final transposition typo tolerance ===
 
-    # iang -> aing
-    - derive/^([jqxnl])iang$/$1aing/
+  # an <- na
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)an$/$1na/
 
-    # ai -> ia，例如 xai -> xia
-    - derive/^([jqx])ia$/$1ai/
+  # ang <- agn / nag
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1agn/
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1nag/
 
-    # ia -> ai，例如 zia -> zai
-    - derive/^([zcdl])ai$/$1ia/
+  # en <- ne
+  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)en$/$1ne/
 
-    # [z/c/z]ahng -> hang
-    - derive/^(s|z|c)hang$/$1ahng/
+  # eng <- egn / neg
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1egn/
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1neg/
+
+  # ian <- ain / ina
+  - derive/^([bpmdtnljqx])ian$/$1ain/
+  - derive/^([bpmdtnljqx])ian$/$1ina/
+
+  # iang <- aing / iagn / inag
+  - derive/^([jqxnl])iang$/$1aing/
+  - derive/^([jqxnl])iang$/$1iagn/
+  - derive/^([jqxnl])iang$/$1inag/
+
+  # in <- ni
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)in$/$1ni/
+
+  # ing <- ign / nig
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1ign/
+  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1nig/
+
+  # ong <- ogn
+  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
+
+  # ong <- ogn / nog
+  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
+  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
+
+  # uan <- una / aun
+  - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1una/
+  - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1aun/
+
+  # iong <- iogn / inog
+  - derive/^([jqx])iong$/$1iogn/
+  - derive/^([jqx])iong$/$1inog/
+
+  # zhang <- zahng, shang <- sahng, chang <- cahng
+  - derive/^(z|s|c)hang$/$1ahng/
+
+# === ia / ai 韵母互换容错：vowel-swap typo tolerance ===
+
+  # xia <- xai, jia <- jai, qia <- qai
+  - derive/^([jqx])ia$/$1ai/
+
+  # zai <- zia, cai <- cia, dai <- dia, lai <- lia
+  - derive/^([zcdl])ai$/$1ia/
