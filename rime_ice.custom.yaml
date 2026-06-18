@@ -3,3 +3,26 @@ patch:
   translator/enable_sentence: true
   translator/enable_user_dict: true
   translator/contextual_suggestions: true
+  speller/algebra/+:
+    # - derive/^正确拼音$/错误输入/
+    
+    # nag -> ang
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)ang$/$1nag/
+
+    # ain -> ian
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)ian$/$1ain/
+    
+    # egn -> eng
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|ch|sh)eng$/$1egn/
+
+    # iang -> aing
+    - derive/^([jqxnl])iang$/$1aing/
+
+    # ai -> ia，例如 xai -> xia
+    - derive/^([jqx])ia$/$1ai/
+
+    # ia -> ai，例如 zia -> zai
+    - derive/^([zcdl])ai$/$1ia/
+
+    # [z/c/z]ahng -> hang
+    - derive/^(s|z|c)hang$/$1ahng/
