@@ -1,31 +1,44 @@
 patch:
+
   # 字体大小
   style/font_point: 18
   style/label_font_point: 16
-  style/comment_font_point: 16
+  style/comment_font_point: 15
+
+  # 字体：让中文更饱满
+  style/font_face: "PingFang SC"
+  style/label_font_face: "PingFang SC"
+  style/comment_font_face: "PingFang SC"
 
   # 候选框横向排列
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
   style/inline_preedit: true
 
-  # 减少候选项内部空白
-  style/candidate_format: "%c.%@"
+  # 候选格式：移除编号和词之间的空格
+  style/candidate_format: "%c. %@"
 
-  # 候选框间距，可以让横向候选不那么挤
-  style/candidate_spacing: 3
+  # 横向候选之间的间距
+  style/candidate_spacing: 0
 
-  # 候选编号和候选词之间的距离
-  style/spacing: 3
+  # 候选间间距
+  style/spacing: 0
+  style/line_spacing: 0
 
-  # 候选框圆角
-  style/corner_radius: 12
-  style/hilited_corner_radius: 12
+  # 减少高亮背景相对文字的额外扩张
+  style/surrounding_extra_expansion: -4
 
-  # 候选框边框和阴影
+  # 调整文字垂直位置
+  style/base_offset: 1
+
+  # 圆角
+  style/corner_radius: 6
+  style/hilited_corner_radius: 0
+
+  # 边框 和 阴影
   style/border_height: 0
   style/border_width: 0
-  style/shadow_size: 3
+  style/shadow_size: 2
 
   # 浅色/深色主题
   style/color_scheme: mac_light
