@@ -65,7 +65,7 @@ rm -rf ~/Library/Rime/build
 "/Library/Input Methods/Squirrel.app/Contents/MacOS/rime_deployer" --build ~/Library/Rime
 ```
 
-重启 Squirrel：
+重启 Squirrel（之后仍然需要手动点击 Deploy 在右上角的输入法）：
 
 ```bash
 killall Squirrel || true

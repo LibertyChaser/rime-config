@@ -14,6 +14,9 @@ patch:
     # ang <- agn / nag
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1agn/
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1nag/
+    
+    # ao <- oa，例如 lao <- loa, zao <- zoa
+    - derive/^([bpmfdtnlgkhzcs]|zh|sh|ch)ao$/$1oa/
 
     # en <- ne
     - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)en$/$1ne/
@@ -31,6 +34,13 @@ patch:
     - derive/^([jqxnl])iang$/$1iagn/
     - derive/^([jqxnl])iang$/$1inag/
 
+    # iao <- aio / ioa，例如 jiao <- jaio / jioa
+    - derive/^([bpmdtnljqx])iao$/$1aio/
+    - derive/^([bpmdtnljqx])iao$/$1ioa/
+
+    # ie <- ei，例如 jie <- jei, qie <- qei, xie <- xei
+    - derive/^([jqx])ie$/$1ei/
+
     # in <- ni
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)in$/$1ni/
 
@@ -38,17 +48,31 @@ patch:
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1ign/
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1nig/
 
-    # ong <- ogn / nog
-    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
-    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
-
-    # uan <- una / aun
-    - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1una/
-    - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1aun/
-
     # iong <- iogn / inog
     - derive/^([jqx])iong$/$1iogn/
     - derive/^([jqx])iong$/$1inog/
+
+    # ong <- ogn / nog
+    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
+    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
+    
+    # uai <- aui / uia，例如 guai <- gaui / guia
+    - derive/^([gkh]|zh|sh|ch)uai$/$1aui/
+    - derive/^([gkh]|zh|sh|ch)uai$/$1uia/
+
+    # uan <- una / aun
+    - derive/^([dtnlgkhrzcsjqxy]|zh|sh|ch)uan$/$1una/
+    - derive/^([dtnlgkhrzcsjqxy]|zh|sh|ch)uan$/$1aun/
+
+    # uang <- aung / uagn / unag，例如 guang <- gaung / guagn / gunag
+    - derive/^([gkh]|zh|sh|ch)uang$/$1aung/
+    - derive/^([gkh]|zh|sh|ch)uang$/$1uagn/
+    - derive/^([gkh]|zh|sh|ch)uang$/$1unag/
+
+    # ue <- eu，例如 jue <- jeu, que <- qeu, xue <- xeu, yue <- yeu
+    - derive/^([jqxy])ue$/$1eu/
+
+# === 复合声母边界错位：compound-initial boundary transposition ===
 
     # zhang <- zahng, shang <- sahng, chang <- cahng
     - derive/^(z|s|c)hang$/$1ahng/
@@ -60,3 +84,26 @@ patch:
 
     # zai <- zia, cai <- cia, dai <- dia, lai <- lia
     - derive/^([zcdl])ai$/$1ia/
+
+# === 声母与韵母首字母错位：initial–final boundary transposition ===
+
+    # an <- a + 声母 + n，例如 lan <- aln, ban <- abn
+    - derive/^([bpmfdtnlgkhrzcs])an$/a$1n/
+
+    # ang <- a + 声母 + ng，例如 lang <- alng, kang <- akng
+    - derive/^([bpmfdtnlgkhrzcs])ang$/a$1ng/
+
+    # en <- e + 声母 + n，例如 ben <- ebn, ren <- ern
+    - derive/^([bpmfdtnlgkhrzcs])en$/e$1n/
+
+    # eng <- e + 声母 + ng，例如 neng <- enng, leng <- elng
+    - derive/^([bpmfdtnlgkhrzcs])eng$/e$1ng/
+
+    # in <- i + 声母 + n，例如 lin <- iln, xin <- ixn
+    - derive/^([bpmdtnljqx])in$/i$1n/
+
+    # ing <- i + 声母 + ng，例如 ling <- ilng, xing <- ixng
+    - derive/^([bpmdtnljqx])ing$/i$1ng/
+
+    # ong <- o + 声母 + ng，例如 long <- olng, kong <- okng
+    - derive/^([bpmfdtnlgkhrzcs])ong$/o$1ng/
