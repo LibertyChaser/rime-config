@@ -3,63 +3,60 @@ patch:
   translator/enable_sentence: true
   translator/enable_user_dict: true
   translator/contextual_suggestions: true
-speller/algebra/+:
-  # - derive/^正确拼音$/错误输入/
+  speller/algebra/+:
+    # - derive/^正确拼音$/错误输入/
 
 # === 韵母内部键序错位容错：final transposition typo tolerance ===
 
-  # an <- na
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)an$/$1na/
+    # an <- na
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)an$/$1na/
 
-  # ang <- agn / nag
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1agn/
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1nag/
+    # ang <- agn / nag
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1agn/
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ang$/$1nag/
 
-  # en <- ne
-  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)en$/$1ne/
+    # en <- ne
+    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)en$/$1ne/
 
-  # eng <- egn / neg
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1egn/
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1neg/
+    # eng <- egn / neg
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1egn/
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1neg/
 
-  # ian <- ain / ina
-  - derive/^([bpmdtnljqx])ian$/$1ain/
-  - derive/^([bpmdtnljqx])ian$/$1ina/
+    # ian <- ain / ina
+    - derive/^([bpmdtnljqx])ian$/$1ain/
+    - derive/^([bpmdtnljqx])ian$/$1ina/
 
-  # iang <- aing / iagn / inag
-  - derive/^([jqxnl])iang$/$1aing/
-  - derive/^([jqxnl])iang$/$1iagn/
-  - derive/^([jqxnl])iang$/$1inag/
+    # iang <- aing / iagn / inag
+    - derive/^([jqxnl])iang$/$1aing/
+    - derive/^([jqxnl])iang$/$1iagn/
+    - derive/^([jqxnl])iang$/$1inag/
 
-  # in <- ni
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)in$/$1ni/
+    # in <- ni
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)in$/$1ni/
 
-  # ing <- ign / nig
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1ign/
-  - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1nig/
+    # ing <- ign / nig
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1ign/
+    - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)ing$/$1nig/
 
-  # ong <- ogn
-  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
+    # ong <- ogn / nog
+    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
+    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
 
-  # ong <- ogn / nog
-  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
-  - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
+    # uan <- una / aun
+    - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1una/
+    - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1aun/
 
-  # uan <- una / aun
-  - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1una/
-  - derive/^([dtnlgkhjqxy]|zh|sh|ch)uan$/$1aun/
+    # iong <- iogn / inog
+    - derive/^([jqx])iong$/$1iogn/
+    - derive/^([jqx])iong$/$1inog/
 
-  # iong <- iogn / inog
-  - derive/^([jqx])iong$/$1iogn/
-  - derive/^([jqx])iong$/$1inog/
-
-  # zhang <- zahng, shang <- sahng, chang <- cahng
-  - derive/^(z|s|c)hang$/$1ahng/
+    # zhang <- zahng, shang <- sahng, chang <- cahng
+    - derive/^(z|s|c)hang$/$1ahng/
 
 # === ia / ai 韵母互换容错：vowel-swap typo tolerance ===
 
-  # xia <- xai, jia <- jai, qia <- qai
-  - derive/^([jqx])ia$/$1ai/
+    # xia <- xai, jia <- jai, qia <- qai
+    - derive/^([jqx])ia$/$1ai/
 
-  # zai <- zia, cai <- cia, dai <- dia, lai <- lia
-  - derive/^([zcdl])ai$/$1ia/
+    # zai <- zia, cai <- cia, dai <- dia, lai <- lia
+    - derive/^([zcdl])ai$/$1ia/
