@@ -99,6 +99,9 @@ patch:
     # eng <- e + 声母 + ng，例如 neng <- enng, leng <- elng
     - derive/^([bpmfdtnlgkhrzcs])eng$/e$1ng/
 
+    # ian <- i + 声母 + an，例如 dian <- idan, lian <- ilan
+    - derive/^([bpmdtnljqx])ian$/i$1an/
+
     # in <- i + 声母 + n，例如 lin <- iln, xin <- ixn
     - derive/^([bpmdtnljqx])in$/i$1n/
 
