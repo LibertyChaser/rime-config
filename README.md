@@ -411,6 +411,10 @@ hai wang cang
 
 可以使用：Option + Left / Option + Right 按词或拼音片段快速移动光标。
 
+或者使用 Tab
+  - Tab = 从前往后切换拼音片段
+  - Shift + Tab = 从后往前切换拼音片段
+
 ### 修改配置后
 
 ```bash
