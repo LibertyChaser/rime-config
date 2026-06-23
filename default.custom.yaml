@@ -6,3 +6,9 @@ patch:
 
   ascii_composer/switch_key/Shift_L: noop
   ascii_composer/switch_key/Shift_R: noop
+
+  ascii_composer/good_old_caps_lock: false
+  # = Caps Lock 用于中英文模式切换，而不是强制输入大写字母
+  ascii_composer/switch_key:
+    Caps_Lock: commit_code
+    # commit_code = 原样提交当前输入的字母编码
