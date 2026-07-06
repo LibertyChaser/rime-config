@@ -98,6 +98,9 @@ M4
 # 应该交给 rime_ice.custom.yaml 里的 speller/algebra
 # 或者必要时用 custom_phrase.txt 做个人兜底
 
+嘛	m	1000000
+吗	m	999999
+
 💦	liu han	1000000
 😓	liu han	999999
 😅	liu han	999998
@@ -111,3 +114,13 @@ Elmhurst	elmhurst	1000000
 Jackson Heights	jackson heights	1000000
 Long Island City	long island city	1000000
 LIC	lic	1000000
+
+# High-priority standard Chinese entries
+说	shuo	1000000
+几点结束	ji dian jie shu	1000000
+处理	chu li	1000000
+这么处理	zhe me chu li	1000000
+怎么	zen me	1000000
+你怎么知道的	ni zen me zhi dao de	1000000
+比你出现早的时候	bi ni chu xian zao de shi hou	1000000
+问一下吧	wen yi xia ba	1000000

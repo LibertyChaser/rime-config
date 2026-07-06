@@ -3,6 +3,7 @@ patch:
   translator/enable_sentence: true
   translator/enable_user_dict: true
   translator/contextual_suggestions: true
+  pin_cand_filter/@1: "m\t嘛 吗"
   speller/algebra/+:
     # - derive/^正确拼音$/错误输入/
 
@@ -19,7 +20,7 @@ patch:
     - derive/^([bpmfdtnlgkhzcs]|zh|sh|ch)ao$/$1oa/
 
     # en <- ne
-    - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)en$/$1ne/
+    - derive/^([bpmfdtnlgkhjqxzcsrw]|zh|sh|ch)en$/$1ne/
 
     # eng <- egn / neg
     - derive/^([bpmfdtnlgkhjqxzcsryw]|zh|sh|ch)eng$/$1egn/
@@ -52,6 +53,15 @@ patch:
     - derive/^([jqx])iong$/$1iogn/
     - derive/^([jqx])iong$/$1inog/
 
+    # me <- em，例如 zenme <- zenem, shenme <- shenem
+    - derive/^me$/em/
+
+    # wu <- uw
+    - derive/^wu$/uw/
+
+    # ju/qu/xu/yu <- uj/uq/ux/uy
+    - derive/^(j|q|x|y)u$/u$1/
+
     # ong <- ogn / nog
     - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1ogn/
     - derive/^([bpmfdtnlgkhjqxzcsr]|zh|sh|ch)ong$/$1nog/
@@ -77,6 +87,18 @@ patch:
     # zhang <- zahng, shang <- sahng, chang <- cahng
     - derive/^(z|s|c)hang$/$1ahng/
 
+    # chu <- c hu, zhua <- z hua, shuo <- s huo
+    - derive/^([zcs])h(a|ai|an|ang|ao|e|en|eng|ong|ou|u|ua|uai|uan|uang|ui|un|uo)$/$1 h$2/
+
+    # zhuan <- zuhan；zh/sh/ch 后的 h 被打到 u 后面
+    - derive/^([zcs])hua$/$1uha/
+    - derive/^([zcs])huai$/$1uhai/
+    - derive/^([zcs])huan$/$1uhan/
+    - derive/^([zcs])huang$/$1uhang/
+    - derive/^([zcs])hui$/$1uhi/
+    - derive/^([zcs])hun$/$1uhn/
+    - derive/^([zcs])huo$/$1uho/
+
 # === ia / ai 韵母互换容错：vowel-swap typo tolerance ===
 
     # xia <- xai, jia <- jai, qia <- qai
@@ -93,11 +115,20 @@ patch:
     # ang <- a + 声母 + ng，例如 lang <- alng, kang <- akng
     - derive/^([bpmfdtnlgkhrzcs])ang$/a$1ng/
 
+    # ai <- a + 声母 + i，例如 hai <- ahi, zhai <- azhi
+    - derive/^([bpmdtnlgkhzcs]|zh|sh|ch)ai$/a$1i/
+
+    # ao <- a + 声母 + o；只保留低风险的 hao <- aho
+    - derive/^hao$/aho/
+
     # en <- e + 声母 + n，例如 ben <- ebn, ren <- ern
     - derive/^([bpmfdtnlgkhrzcs])en$/e$1n/
 
     # eng <- e + 声母 + ng，例如 neng <- enng, leng <- elng
     - derive/^([bpmfdtnlgkhrzcs])eng$/e$1ng/
+
+    # ei <- e + 声母 + i，例如 bei <- ebi, zhei <- ezhi
+    - derive/^([bpmfdtnlgkhzcs]|zh|sh)ei$/e$1i/
 
     # ian <- i + 声母 + an，例如 dian <- idan, lian <- ilan
     - derive/^([bpmdtnljqx])ian$/i$1an/
@@ -110,3 +141,21 @@ patch:
 
     # ong <- o + 声母 + ng，例如 long <- olng, kong <- okng
     - derive/^([bpmfdtnlgkhrzcs])ong$/o$1ng/
+
+    # ou <- o + 声母 + u，例如 hou <- ohu, shou <- oshu
+    - derive/^([pmfdtnlgkhrzcs]|zh|sh|ch)ou$/o$1u/
+
+    # ua <- u + 声母 + a，例如 hua <- uha, shua <- usha
+    - derive/^([gkh]|zh|sh|ch)ua$/u$1a/
+
+    # uai <- u + 声母 + ai，例如 huai <- uhai, shuai <- ushai
+    - derive/^([gkh]|zh|sh|ch)uai$/u$1ai/
+
+    # ui <- u + 声母 + i，例如 hui <- uhi, zhui <- uzhi
+    - derive/^([gkhrzcs]|zh|sh|ch)ui$/u$1i/
+
+    # un <- u + 声母 + n，例如 hun <- uhn, zhun <- uzhn
+    - derive/^([dtnlgkhrzcs]|zh|sh|ch)un$/u$1n/
+
+    # uo <- u + 声母 + o，例如 guo <- ugo, kuo <- uko, huo <- uho
+    - derive/^([gkh])uo$/u$1o/
