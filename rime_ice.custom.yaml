@@ -104,8 +104,8 @@ patch:
     # xia <- xai, jia <- jai, qia <- qai
     - derive/^([jqx])ia$/$1ai/
 
-    # zai <- zia, cai <- cia, dai <- dia, lai <- lia
-    - derive/^([zcdl])ai$/$1ia/
+    # zai <- zia, cai <- cia, dai <- dia, lai <- lia, tai <- tia
+    - derive/^([zcdlt])ai$/$1ia/
 
 # === 声母与韵母首字母错位：initial–final boundary transposition ===
 
